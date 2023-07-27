@@ -48,13 +48,13 @@ def get_str(idx, offset2):
 
 
 def get_random(total_amount, quantities):
-    """将输入值随机分割"""
+    
     amount_list = []
     person_num = quantities
     cur_total_amount = total_amount
     for _ in range(quantities - 1):
         amount = random.randint(0, cur_total_amount // person_num * 2)
-        # 每次减去当前随机值，用剩余值进行下次随机获取
+      
         cur_total_amount -= amount
         person_num -= 1
         amount_list.append(amount)
@@ -64,9 +64,9 @@ def get_random(total_amount, quantities):
 
 
 def cat_np(m, random_list):
-    """数据随机前后补零增强"""
+   
     if len(m) > 20:
-        change_num = 10  # 设置修改字母数
+        change_num = 10  
         m[np.random.choice(len(m), change_num, replace=False)] = np.array(
             [np.random.randint(0, 2, size=7) for i in range(change_num)])
     m1 = np.random.randint(0, 2, size=(random_list[0], 7))
@@ -106,7 +106,7 @@ class ScaledDotProductAttention(nn.Module):
         if scale:
             attention = attention * scale
         if attn_mask:
-            # 给需要mask的地方设置一个负无穷
+           
             attention = attention.masked_fill_(attn_mask, -np.inf)
         # 计算softmax
         attention = self.softmax(attention)
@@ -131,12 +131,12 @@ class MultiHeadAttention(nn.Module):
         self.dot_product_attention = ScaledDotProductAttention(dropout)
         self.linear_final = nn.Linear(self.dim_per_head * num_heads, model_dim)
         self.dropout = nn.Dropout(dropout)
-        # multi-head attention之后需要做layer norm
+       
         self.layer_norm = nn.LayerNorm(model_dim)
         self.re = nn.ReLU(inplace=True)
 
     def forward(self, key, value, query, attn_mask=None):
-        # 残差连接
+      
         residual = query
 
         dim_per_head = self.dim_per_head
