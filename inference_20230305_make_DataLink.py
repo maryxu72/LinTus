@@ -17,7 +17,7 @@ for npn in tqdm(np_files, total=len(np_files), leave=True):
 del out1
 # 保存整个数据输出
 # np.save('./npy_group/out_all_total.npy', out_all)
-# 设置数据链表参数
+
 wd = 1
 wz = 100000000
 savepath = f'{wd}_{wz}out'
